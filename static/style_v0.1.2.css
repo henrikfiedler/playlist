@@ -1,0 +1,58 @@
+.bg_inhalt {
+
+background-color: #eee;
+
+}
+
+.hidden {
+
+display: none;
+visibility: hidden;
+
+}
+
+.streaming_logo {
+
+width: 15%;
+height: auto;
+
+}
+
+.streaming_logo_create {
+
+width: 30%;
+height: auto;
+
+}
+
+
+
+
+.navbar-brand {
+
+float: none;
+text-align: center;
+
+}
+
+html {
+  font-size: 1rem;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 1.2rem;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 1.4rem;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 1.6rem;
+  }
+}

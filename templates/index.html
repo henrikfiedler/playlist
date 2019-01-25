@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlist</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_v0.1.2.css')}}">
+
+    <script>
+    function auswahl() {
+    if (document.getElementById('group').checked) {
+        document.getElementById('required_downvotes').style.display = 'block';
+    }
+    else document.getElementById('required_downvotes').style.display = 'none';
+
+    }
+
+    </script>
+
+
+
+</head>
+<body>
+
+<div class="container-fluid">
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand text-center" href="/">
+            <img src="" width="30" height="30" class="d-inline-block align-top" title="FasterPlaylists Logo" alt="FasterPlaylists Logo">
+            FasterPlaylists
+        </a>
+
+        <ul class="navbar-nav flex-row ml-sm-auto d-none d-sm-flex">
+            <li class="nav-item mt-2 mr-2">
+                <a href="https://twitter.com/FasterPlaylists?ref_src=twsrc%5Etfw"
+                       class="twitter-follow-button"
+                       data-size="large"
+                       data-show-count="false">
+                        Follow @FasterPlaylists
+                </a>
+                <script
+                            async src="https://platform.twitter.com/widgets.js"
+                            charset="utf-8">
+                </script>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link mr-sm-2 p-2" href="/contact">
+                        Contact
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-item nav-link p-2" href="/impressum">
+                        Impressum
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<section id="create_playlist">
+    <div class="container-fluid mt-3">
+
+        <div class="container bg-light py-3">
+        <h1 class="text-left">Create a Playlist</h1>
+        <form action="/create" method="post">
+
+        <div class="row">
+            <div class="form-group col-12 col-md-6">
+                <div class="col-12">
+                <label for="playlist_name">Playlistname</label>
+                </div>
+                <input class="form-control" type="text" name="playlist_name" id="playlist_name" placeholder="Party" required>
+            </div>
+            <div class="form-group col-12 col-md-6 mt-2 mt-md-0" id="required_downvotes" style="display:none">
+                <div class="col-12">
+                <label for="downvotes">Required Downvotes</label>
+                </div>
+                <input class="form-control" type="text" name="downvotes" id="downvotes" placeholder="5">
+                <small>The amount of downvotes a track needs to be voted out of the playlist.</small>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-12 col-md-3 mt-2">
+                <div class="col-10 offset-1">
+                <fieldset>
+                    <input class="form-check-input" type="radio" id="private" name="public" value="False" checked>
+                    <label class="form-check-label" for="private">Private</label>
+                </fieldset>
+                </div>
+            </div>
+            <div class="form-group col-12 col-md-3 mt-0 mt-md-2">
+                <div class="col-10 offset-1">
+                <fieldset>
+                    <input class="form-check-input" type="radio" id="public" name="public" value="True">
+                    <label class="form-check-label" for="public">Public</label>
+                </fieldset>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-12 col-md-3 mt-2">
+                <div class="col-10 offset-1">
+                 <fieldset>
+                    <input class="form-check-input" type="radio" id="individual" name="group_playlist" value="False" onclick="auswahl()" checked>
+                    <label class="form-check-label" for="individual">Only for me</label>
+                </fieldset>
+                </div>
+            </div>
+            <div class="form-group col-12 col-md-3 mt-0 mt-md-2">
+                <div class="col-10 offset-1">
+                <fieldset>
+                    <input class="form-check-input" type="radio" id="group" name="group_playlist" value="True" onclick="auswahl()">
+                    <label class="form-check-label" for="group">For a group (disabled)</label>
+                </fieldset>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row my-2 ml-2 text">
+            <div class="text-right">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+
+        </form>
+
+        </div>
+    </div>
+</section>
+
+<div class="container-fluid mt-3">
+    <div class="container bg-light py-2">
+        <div class="row">
+            <div class="col-12">
+                <h1>FasterPlaylists</h1>
+                <p class="lead">Create playlists quickly by just adding them into a table and create them on your favourite music streaming service.</p>
+                <p class="lead">No need for an account - no registration.</p>
+                <p class="lead"><a href="#create_playlist">Create a Playlist</a></p>
+                <br/>
+                <h2>Currently available for</h2>
+                <p><img src="{{url_for('static', filename='Spotify_Logo_Green.png')}}" class="img-fluid streaming_logo" title="Spotify Logo" alt="Spotify Logo Green" /></p>
+
+
+                <h2>Will be developed for</h2>
+                <p><img src="{{url_for('static', filename='AppleMusic_Logo_White.svg')}}" class="img-fluid streaming_logo" title="Apple Music Logo" alt="Apple Music Logo White" /></p>
+
+
+                <h2>What's new</h2>
+                <ul>
+                    <li>
+                        Delete tracks from your table
+                    </li>
+                    <li>
+                        Sort your table as you want
+                    </li>
+                    <li>
+                        Import textfiles
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="container bg-light py-2">
+        <div class="row">
+            <div class="col-12">
+                <h1>Info for Beta Testers</h1>
+                <p>Please note that you're testing a beta. Save storage of your data can't be guaranteed.</p>
+                <p>The website is developed and updated frequently without nofication.</p>
+                <p>If you want to submit an issue, please fill this <a href="https://goo.gl/forms/9ObdKjASt786rgzc2" target="_blank">Google Form</a></p>
+                <p>If you have ideas for extensions apart from those mentioned below, fill this <a href="https://goo.gl/forms/IN2LTRz0oJ6DoWpz1" target="_blank">Google Form</a></p>
+                <p>Aditionally you can send an <a href="mailto:beta@fasterplaylists.com">E-Mail</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-6 bg-light py-2">
+
+                <h1>Development info</h1>
+
+                <h2>In development</h2>
+                <ul>
+                    <li>
+                        Edit tracks
+                    </li>
+                    <li>
+                        Group-playlists & downvotes
+                    </li>
+                    <li>
+                        Notifications for failed requests
+                    </li>
+                </ul>
+
+                <h2>To be developed</h2>
+                <ul>
+                    <li>
+                        Search suggestions
+                    </li>
+                    <li>
+                        Song previews
+                    </li>
+                    <li>
+                        Webplayer
+                    </li>
+                    <li>
+                        Add tracks to an existing playlist
+                    </li>
+                    <li>
+                        Sync with Spotify
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="col-12 col-md-6 mt-2 mt-md-0 py-2">
+
+
+                <a class="twitter-timeline" data-height="600" data-theme="light" href="https://twitter.com/FasterPlaylists?ref_src=twsrc%5Etfw">Tweets by TwitterDev</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<footer class="footer bg-dark mt-3">
+      <div class="container">
+          <div class="row">
+              <div class="col-12 col-sm-6">
+                  <span class="text-light">FasterPlaylists 2019</span>
+              </div>
+              <div class="col-12 col-sm-6">
+                  <span class="text-light">Find us on <a href="https://twitter.com/FasterPlaylists" target="_blank">Twitter</a></span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 col-sm-6">
+                  <span class="text-light"><a href="/contact">Contact</a></span>
+              </div>
+              <div class="col-12 col-sm-6">
+                  <span class="text-light"><a href="/impressum">Impressum</a></span>
+              </div>
+          </div>
+      </div>
+</footer>
+
+
+</body>
+</html>

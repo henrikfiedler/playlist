@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {{ playlist_name }}
+    </title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_v0.1.2.css')}}">
+
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand text-center" href="/">
+            <img src="" width="30" height="30" class="d-inline-block align-top" title="FasterPlaylists Logo" alt="FasterPlaylists Logo">
+            FasterPlaylists
+        </a>
+
+        <ul class="navbar-nav flex-row ml-sm-auto d-none d-sm-flex">
+            <li class="nav-item mt-2 mr-2">
+                <a href="https://twitter.com/FasterPlaylists?ref_src=twsrc%5Etfw"
+                       class="twitter-follow-button"
+                       data-size="large"
+                       data-show-count="false">
+                        Follow @FasterPlaylists
+                </a>
+                <script
+                            async src="https://platform.twitter.com/widgets.js"
+                            charset="utf-8">
+                </script>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item nav-link mr-sm-2 p-2" href="/contact">
+                        Contact
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-item nav-link p-2" href="/impressum">
+                        Impressum
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="container bg-light py-2">
+        <h1>{{ playlist_name }}</h1>
+        {% if group_playlist == "True" %}
+        <h5>Required Downvotes: {{ required_downvotes }}</h5>
+        <p><small>The amount of downvotes a track needs to be voted out of the playlist.</small></p>
+        {% endif %}
+
+        <h5>{{ playlist_id }}</h5>
+        <p><small><b>Note:</b> If you want to close this window and edit your playlist in the future you need to save the code above or the url you're currently in!</small></p>
+</div>
+</div>
+
+<div class="container-fluid">
+    <div class="col-10 offset-1 col-sm-6 offset-sm-3 col-md-4 offset-md-4 mt-2">
+        <form action="/spotify_code" method="post">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Create Playlist on
+                <img src="{{url_for('static', filename='Spotify_Logo_Green.png')}}"
+                     class="img-fluid streaming_logo_create" title="Spotify Logo" alt="Spotify Logo Green" />
+            </button>
+            <input type="hidden" name="playlist_id" value="{{ playlist_id }}">
+        </form>
+    </div>
+</div>
+
+
+
+<div class="container-fluid mt-3">
+    <div class="container bg-light py-2">
+
+        <form action="/getfile" method="POST" enctype="multipart/form-data">
+            <h5>Upload a textfile:</h5>
+            <input class="form-control-file" type="file" name="file">
+            <input type="hidden" name="playlist_id" value="{{ playlist_id }}">
+            <small><b>Note:</b> The textfile must be encoded in UTF-8 and the individual fields must be seperated with a tab!<br/>
+                <b>Example:</b>
+                <table>
+                <tr>
+                    <td>title1&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>artist1</td>
+                </tr>
+                <tr>
+                    <td>title2&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td>artist2</td>
+                </tr>
+                </table>
+                </small>
+
+            <button type="submit" class="btn btn-primary">Upload Textfile</button>
+        </form>
+
+    </div>
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="container bg-light py-2">
+        <form action="/add" method="post">
+            <div class="row">
+                <div class="form-group col-12 col-lg-5">
+                    <div class="col-12">
+                        <label for="titel">Title</label>
+                        <input class="form-control" type="text" name="titel" id="titel" placeholder="Last Christmas" required>
+                    </div>
+
+                </div>
+                <div class="form-group col-12 col-lg-5">
+                    <div class="col-12">
+                        <label for="interpret">Artist</label>
+                        <input class="form-control" type="text" name="interpret" id="interpret" placeholder="Wham!">
+                    </div>
+
+                </div>
+                    <input name="playlist_id" type="hidden" value="{{ playlist_id }}">
+                <div class="form-group col-12 col-lg-2 d-inline-flex align-items-center">
+                    <button type="submit" class="btn btn-primary">Add Song</button>
+                </div>
+                <div class="col-12">
+                <small><b>Note:</b> Adding a title is required. Adding an artist is optional but very recommended to improve correct search results.</small>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="container-fluid mt-3">
+<div class="container bg-light py-2">
+
+    <div class="col-12 col-lg-6 offset-lg-3">
+<form id="sort_form" action="/sort" method="post">
+    <label for="sort">Sort</label>
+    <select class="form-control" id="sort" name="sort" onchange="sort_submit()">
+
+        {% if sort == "id" %}
+        <option value="id" onclick="sort_selected" selected>Added first</option>
+        <option value="id_reverse" onclick="sort_selected">Added last</option>
+        <option value="titel" onclick="sort_selected">Title A-Z</option>
+        <option value="titel_reverse" onclick="sort_selected">Title Z-A</option>
+        <option value="interpret" onclick="sort_selected">Artist A-Z</option>
+        <option value="interpret_reverse" onclick="sort_selected">Artist Z-A</option>
+
+        {% elif sort == "id_reverse" %}
+        <option value="id" onclick="sort_selected">Added first</option>
+        <option value="id_reverse" onclick="sort_selected" selected>Added last</option>
+        <option value="titel" onclick="sort_selected">Title A-Z</option>
+        <option value="titel_reverse" onclick="sort_selected">Title Z-A</option>
+        <option value="interpret" onclick="sort_selected">Artist A-Z</option>
+        <option value="interpret_reverse" onclick="sort_selected">Artist Z-A</option>
+
+        {% elif sort == "titel" %}
+        <option value="id" onclick="sort_selected">Added first</option>
+        <option value="id_reverse" onclick="sort_selected">Added last</option>
+        <option value="titel" onclick="sort_selected" selected>Title A-Z</option>
+        <option value="titel_reverse" onclick="sort_selected">Title Z-A</option>
+        <option value="interpret" onclick="sort_selected">Artist A-Z</option>
+        <option value="interpret_reverse" onclick="sort_selected">Artist Z-A</option>
+
+        {% elif sort == "titel_reverse" %}
+        <option value="id" onclick="sort_selected">Added first</option>
+        <option value="id_reverse" onclick="sort_selected">Added last</option>
+        <option value="titel" onclick="sort_selected">Title A-Z</option>
+        <option value="titel_reverse" onclick="sort_selected" selected>Title Z-A</option>
+        <option value="interpret" onclick="sort_selected">Artist A-Z</option>
+        <option value="interpret_reverse" onclick="sort_selected">Artist Z-A</option>
+
+        {% elif sort == "interpret" %}
+        <option value="id" onclick="sort_selected">Added first</option>
+        <option value="id_reverse" onclick="sort_selected">Added last</option>
+        <option value="titel" onclick="sort_selected">Title A-Z</option>
+        <option value="titel_reverse" onclick="sort_selected">Title Z-A</option>
+        <option value="interpret" onclick="sort_selected" selected>Artist A-Z</option>
+        <option value="interpret_reverse" onclick="sort_selected">Artist Z-A</option>
+
+        {% elif sort == "interpret_reverse" %}
+        <option value="id" onclick="sort_selected">Added first</option>
+        <option value="id_reverse" onclick="sort_selected">Added last</option>
+        <option value="titel" onclick="sort_selected">Title A-Z</option>
+        <option value="titel_reverse" onclick="sort_selected">Title Z-A</option>
+        <option value="interpret" onclick="sort_selected">Artist A-Z</option>
+        <option value="interpret_reverse" onclick="sort_selected" selected>Artist Z-A</option>
+
+        {% else %}
+        <option value="id" onclick="sort_selected" selected>Added first</option>
+        <option value="id_reverse" onclick="sort_selected">Added last</option>
+        <option value="titel" onclick="sort_selected">Title A-Z</option>
+        <option value="titel_reverse" onclick="sort_selected">Title Z-A</option>
+        <option value="interpret" onclick="sort_selected">Artist A-Z</option>
+        <option value="interpret_reverse" onclick="sort_selected">Artist Z-A</option>
+
+        {% endif %}
+
+    </select>
+
+    <input type="hidden" name="playlist_id" value="{{ playlist_id }}">
+    </div>
+</form>
+</div>
+</div>
+
+<div class="container-fluid mt-3">
+    <div class="container">
+        <div class="table-responsive">
+
+
+            <table class="table table-condensed table-hover" id="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <!--
+                            <th scope="col">#</th>
+                            !-->
+                            <th scope="col">Title</th>
+                            <th scope="col">Artist</th>
+                            {% if group_playlist == "True" %}
+                            <th scope="col">Votes</th>
+                            {% endif %}
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    {% for song in songs %}
+                    <tr>
+                        <!--
+                        <td>{{song.id}}</td>
+                        !-->
+                        <td>{{song.titel}}</td>
+                        <td>{{song.interpret}}</td>
+                        {% if group_playlist == "True" %}
+                        <td>{{song.votes}}</td>
+                        {% endif %}
+                        <td>
+                        {% if group_playlist == "True" %}
+
+                            <form id="downvote_form" action="/downvote" method="post">
+                                <input type="hidden" id="downvote_titel" name="downvote_titel" value="test">
+                                <input type="hidden" id="downvote_interpret" name="downvote_interpret" value="test">
+                                <input type="hidden" name="playlist_id" value="{{ playlist_id }}">
+                            </form>
+                                <button class="btn btn-warning btn-sm" type="submit" id="downvote_button" name="downvote_button" onclick="downvote_values(this)">Downvote</button>
+
+                        {% elif group_playlist == "False" %}
+
+
+
+                            <form id="delete_form" action="/delete" method="post">
+                                <input type="hidden" id="delete_titel" name="delete_titel" value="test">
+                                <input type="hidden" id="delete_interpret" name="delete_interpret" value="test">
+                                <input type="hidden" name="playlist_id" value="{{ playlist_id }}">
+                            </form>
+                                <button class="btn btn-danger btn-sm" name="delete_button" onclick="delete_values(this)">Delete</button>
+                        {% endif %}
+                        </td>
+                        {% if spotify_track_id != 1 %}
+                        <td>
+                            <div style="display:block">
+                                <button class="btn btn-info btn-sm" name="show_webplayer" onclick="show_webplayer(this)">
+                                    Song Preview
+                                </button>
+                            </div>
+                            <div style="display:none">
+                                <iframe src="https://open.spotify.com/embed/track/1cSXzDZt8vzuUp2XREQEJN"
+                                        width="250"
+                                        height="80"
+                                        frameborder="0"
+                                        allowtransparency="true"
+                                        allow="encrypted-media">
+                                </iframe>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer class="footer bg-dark mt-3">
+      <div class="container">
+          <div class="row">
+              <div class="col-12 col-sm-6">
+                  <span class="text-light">FasterPlaylists 2019</span>
+              </div>
+              <div class="col-12 col-sm-6">
+                  <span class="text-light">Find us on <a href="https://twitter.com/FasterPlaylists" target="_blank">Twitter</a></span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 col-sm-6">
+                  <span class="text-light"><a href="/contact">Contact</a></span>
+              </div>
+              <div class="col-12 col-sm-6">
+                  <span class="text-light"><a href="/impressum">Impressum</a></span>
+              </div>
+          </div>
+      </div>
+</footer>
+
+<script>
+    function delete_values(x) {
+    var td = x.parentNode;
+    interpret = td.previousSibling.previousSibling;
+    interpret_value = interpret.innerHTML;
+    titel = interpret.previousSibling.previousSibling;
+    titel_value = titel.innerHTML;
+
+    document.getElementById("delete_titel").value = titel_value;
+    document.getElementById("delete_interpret").value = interpret_value;
+
+    console.log(interpret);
+    console.log(interpret_value);
+    console.log(titel);
+    console.log(titel_value);
+
+    document.forms["delete_form"].submit();
+
+    }
+</script>
+
+<script>
+    function downvote_values(x) {
+    var td = x.parentNode;
+    interpret = td.previousSibling.previousSibling.previousSibling.previousSibling;
+    interpret_value = interpret.innerHTML;
+    titel = interpret.previousSibling.previousSibling;
+    titel_value = titel.innerHTML;
+
+    document.getElementById("downvote_titel").value = titel_value;
+    document.getElementById("downvote_interpret").value = interpret_value;
+
+    console.log(interpret);
+    console.log(interpret_value);
+    console.log(titel);
+    console.log(titel_value);
+
+    document.forms["downvote_form"].submit();
+
+    }
+</script>
+
+<script>
+    function show_webplayer(x) {
+
+    var div1 = x.parentNode;
+    var div2 = div1.nextSibling.nextSibling;
+
+    console.log(div1)
+    console.log(div2)
+
+    div1.style.display = "none";
+    div2.style.display = "block";
+
+    }
+</script>
+
+<script>
+    function sort_submit() {
+      document.forms["sort_form"].submit();
+    }
+</script>
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlist</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style_v0.1.1.css')}}">
+
+    <script>
+    function auswahl() {
+    if (document.getElementById('group').checked) {
+        document.getElementById('required_downvotes').style.display = 'block';
+    }
+    else document.getElementById('required_downvotes').style.display = 'none';
+
+    }
+
+    </script>
+
+
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+  <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand text-center" href="/">
+            <img src="" width="30" height="30" class="d-inline-block align-top" title="FasterPlaylists Logo" alt="FasterPlaylists Logo">
+            FasterPlaylists
+        </a>
+
+        <ul class="navbar-nav flex-row ml-sm-auto d-none d-sm-flex">
+            <li class="nav-item mt-2 mr-2">
+                <a href="https://twitter.com/FasterPlaylists?ref_src=twsrc%5Etfw"
+                       class="twitter-follow-button"
+                       data-size="large"
+                       data-show-count="false">
+                        Follow @FasterPlaylists
+                </a>
+                <script
+                            async src="https://platform.twitter.com/widgets.js"
+                            charset="utf-8">
+                </script>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-item nav-link mr-sm-2 p-2" href="/contact">
+                        Contact
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-item nav-link p-2" href="/impressum">
+                        Impressum
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<section>
+    <div class="container-fluid mt-3">
+
+        <div class="container bg-light py-3">
+
+            <h1>Contact</h1>
+
+            <p>Contact via Twitter
+                <br/>
+                <a href="https://twitter.com/intent/tweet?screen_name=FasterPlaylists&ref_src=twsrc%5Etfw"
+                   class="twitter-mention-button"
+                   data-size="large"
+                   data-show-count="false">
+                    Tweet to @FasterPlaylists
+                </a>
+                <script async src="https://platform.twitter.com/widgets.js"
+                        charset="utf-8">
+
+                </script>
+                <br/>
+                <a href="https://twitter.com/messages/compose?recipient_id=1079529162069757958&ref_src=twsrc%5Etfw"
+                   class="twitter-dm-button"
+                   data-size="large"
+                   data-screen-name="FasterPlaylists"
+                   data-show-count="false">
+                    Message @FasterPlaylists
+                </a>
+                <script async src="https://platform.twitter.com/widgets.js"
+                        charset="utf-8">
+                </script>
+            </p>
+            <p><a href="mailto:info@fasterplaylists.com">Contact via Mail</a></p>
+
+        </div>
+    </div>
+
+</section>
+
+
+
+<footer class="footer bg-dark mt-3">
+      <div class="container">
+          <div class="row">
+              <div class="col-12 col-sm-6">
+                  <span class="text-light">FasterPlaylists 2019</span>
+              </div>
+              <div class="col-12 col-sm-6">
+                  <span class="text-light">Find us on <a href="https://twitter.com/FasterPlaylists" target="_blank">Twitter</a></span>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-12 col-sm-6">
+                  <span class="text-light"><a href="/contact">Contact</a></span>
+              </div>
+              <div class="col-12 col-sm-6">
+                  <span class="text-light"><a href="/impressum">Impressum</a></span>
+              </div>
+          </div>
+      </div>
+</footer>
+
+
+</body>
+</html>
